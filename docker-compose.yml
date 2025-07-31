@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: https://github.com/rodrigoGit-2014/AbacusPortafolioApp.git
+    ports:
+      - "8080:8080"
+    networks:
+      - abacus-net
+
+  frontend:
+    build:
+      context: https://github.com/rodrigoGit-2014/AbacusPortafolioFrontend.git
+    ports:
+      - "8501:8501"
+    depends_on:
+      - backend
+    networks:
+      - abacus-net
+    environment:
+      - API_URL=http://backend:8080
+
+networks:
+  abacus-net:
