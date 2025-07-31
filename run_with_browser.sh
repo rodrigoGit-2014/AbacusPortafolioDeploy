@@ -1,10 +1,16 @@
 #!/bin/bash
 
-# Levanta docker-compose en segundo plano
+# Levanta los servicios en segundo plano
 docker-compose up --build &
 
-# Espera unos segundos para que el servicio arranque
-sleep 5
+# Esperar hasta que el frontend de Streamlit esté disponible
+echo "⏳ Esperando a que Streamlit esté disponible en http://localhost:8501..."
 
-# Abre el navegador en la URL deseada
+until curl --output /dev/null --silent --head --fail http://localhost:8501; do
+    printf '.'
+    sleep 2
+done
+
+# Abrir navegador automáticamente
+echo -e "\n✅ Streamlit levantado correctamente. Abriendo navegador..."
 open http://localhost:8501
